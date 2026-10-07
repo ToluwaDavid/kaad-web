@@ -1,0 +1,24 @@
+<form (submit)="onSubmit(); $event.preventDefault()">
+    <h1>Sign in to kadd</h1>
+
+
+    <label for="email" >Email</label>
+    <input 
+      id="email" 
+      type="email"
+      [value]="email()"
+      (input)="email.set($any($event.target).value)"
+      placeholder="Enter your email"
+       />
+
+       <label for="password">Password</label>
+       <input
+        id="password"
+        type="password"
+        [value]="password()"
+        (input)="password.set($any($event.target).value)"
+        placeholder="Enter your password"
+         />
+</form>
+
+<p>Typing email : {{ email() }}</p>
