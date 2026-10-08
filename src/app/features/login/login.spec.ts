@@ -19,4 +19,17 @@ describe('Login', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should update the email signal when set', () => {
+    component.email.set('deyplay@gbam.com');
+    expect(component.email()).toBe('deyplay@gbam.com');
+  });
+
+  it('should call onSubmit without errors', () => {
+    component.email.set('deyplay@gbam.com');
+    component.password.set('supersecret123');
+    
+    expect(() => component.onSubmit()).not.toThrow();
+  });
+
 });
