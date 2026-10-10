@@ -1,24 +1,70 @@
-<form (submit)="onSubmit(); $event.preventDefault()">
-    <h1>Sign in to kadd</h1>
+<!-- Full-height, centered on a soft near-white background -->
+<main class="min-h-screen flex items-center justify-center bg-[#fafafa] px-4">
 
+  <!-- The card: white, rounded, subtle border + shadow, generous padding -->
+  <div class="w-full max-w-sm bg-white rounded-2xl border border-gray-200/70 shadow-sm p-8">
 
-    <label for="email" >Email</label>
-    <input 
-      id="email" 
-      type="email"
-      [value]="email()"
-      (input)="email.set($any($event.target).value)"
-      placeholder="Enter your email"
-       />
+    <!-- Brand mark -->
+    <div class="mb-8 text-center">
+      <span class="text-xl font-semibold tracking-tight text-gray-900">kaad<span class="text-blue-600">.</span></span>
+    </div>
 
-       <label for="password">Password</label>
-       <input
-        id="password"
-        type="password"
-        [value]="password()"
-        (input)="password.set($any($event.target).value)"
-        placeholder="Enter your password"
-         />
-</form>
+    <!-- Heading -->
+    <h1 class="text-2xl font-semibold tracking-tight text-gray-900 text-center">Sign in</h1>
+    <p class="mt-1 text-sm text-gray-500 text-center">Welcome back to your verified card.</p>
 
-<p>Typing email : {{ email() }}</p>
+    <!-- The form (bindings unchanged from before) -->
+    <form (submit)="onSubmit(); $event.preventDefault()" class="mt-8 space-y-4">
+
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+        <input
+          id="email"
+          type="email"
+          [value]="email()"
+          (input)="email.set($any($event.target).value)"
+          placeholder="you@company.com"
+          class="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-sm text-gray-900
+                 placeholder-gray-400 focus:outline-none focus:border-blue-600
+                 focus:ring-2 focus:ring-blue-600/15 transition"
+        />
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
+        <input
+          id="password"
+          type="password"
+          [value]="password()"
+          (input)="password.set($any($event.target).value)"
+          placeholder="Your password"
+          class="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-sm text-gray-900
+                 placeholder-gray-400 focus:outline-none focus:border-blue-600
+                 focus:ring-2 focus:ring-blue-600/15 transition"
+        />
+      </div>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="w-full rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white
+               hover:bg-blue-700 active:scale-[.99] transition">
+        Sign in
+      </button>
+    </form>
+
+    <!-- Result message (only shows when there's a message) -->
+    @if (message()) {
+      <p class="mt-4 text-center text-sm text-gray-600">{{ message() }}</p>
+    }
+
+    <!-- Footer link -->
+    <p class="mt-6 text-center text-sm text-gray-500">
+      New to Kaad?
+      <a href="#" class="font-medium text-blue-600 hover:underline">Create an account</a>
+    </p>
+
+  </div>
+</main>
