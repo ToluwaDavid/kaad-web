@@ -15,6 +15,11 @@ export class Login {
   email = signal('');
   password = signal('');
   message = signal('');
+showPassword = signal(false);
+
+togglePassword() {
+  this.showPassword.set(!this.showPassword());
+}
 
   onSubmit() {
     this.auth.login(this.email(), this.password()).subscribe(

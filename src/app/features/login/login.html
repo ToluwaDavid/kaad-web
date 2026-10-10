@@ -1,70 +1,73 @@
-<!-- Full-height, centered on a soft near-white background -->
-<main class="min-h-screen flex items-center justify-center bg-[#fafafa] px-4">
+<!-- Soft brand glow background (blue + warm orange tints) -->
+<main class="relative min-h-screen flex items-center justify-center overflow-hidden bg-white px-4">
+  <!-- two blurred color blobs behind everything -->
+  <div class="pointer-events-none absolute -top-32 -left-24 h-96 w-96 rounded-full bg-blue-500/15 blur-3xl"></div>
+  <div class="pointer-events-none absolute -bottom-32 -right-24 h-96 w-96 rounded-full bg-orange-400/15 blur-3xl"></div>
 
-  <!-- The card: white, rounded, subtle border + shadow, generous padding -->
-  <div class="w-full max-w-sm bg-white rounded-2xl border border-gray-200/70 shadow-sm p-8">
+  <!-- The card -->
+  <div class="relative z-10 w-full max-w-sm  p-8">
 
-    <!-- Brand mark -->
+    <!-- Brand -->
     <div class="mb-8 text-center">
-      <span class="text-xl font-semibold tracking-tight text-gray-900">kaad<span class="text-blue-600">.</span></span>
+      <span class="text-3xl font-extrabold tracking-tight text-gray-900">kaad<span class="text-orange-500">.</span></span>
     </div>
 
-    <!-- Heading -->
-    <h1 class="text-2xl font-semibold tracking-tight text-gray-900 text-center">Sign in</h1>
-    <p class="mt-1 text-sm text-gray-500 text-center">Welcome back to your verified card.</p>
+    <h1 class="text-xl font-semibold tracking-tight text-gray-900">Welcome back</h1>
+    <p class="mt-1 text-sm text-gray-500  ">Sign in to your verified card.</p>
 
-    <!-- The form (bindings unchanged from before) -->
     <form (submit)="onSubmit(); $event.preventDefault()" class="mt-8 space-y-4">
 
       <!-- Email -->
       <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">Email address</label>
         <input
-          id="email"
-          type="email"
-          [value]="email()"
-          (input)="email.set($any($event.target).value)"
+          id="email" type="email"
+          [value]="email()" (input)="email.set($any($event.target).value)"
           placeholder="you@company.com"
           class="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-sm text-gray-900
                  placeholder-gray-400 focus:outline-none focus:border-blue-600
-                 focus:ring-2 focus:ring-blue-600/15 transition"
-        />
+                 focus:ring-2 focus:ring-blue-600/15 transition" />
       </div>
 
-      <!-- Password -->
+      <!-- Password with show/hide toggle -->
       <div>
         <label for="password" class="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
-        <input
-          id="password"
-          type="password"
-          [value]="password()"
-          (input)="password.set($any($event.target).value)"
-          placeholder="Your password"
-          class="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-sm text-gray-900
-                 placeholder-gray-400 focus:outline-none focus:border-blue-600
-                 focus:ring-2 focus:ring-blue-600/15 transition"
-        />
+        <div class="relative">
+          <input
+            id="password"
+            [type]="showPassword() ? 'text' : 'password'"
+            [value]="password()" (input)="password.set($any($event.target).value)"
+            placeholder="Your password"
+            class="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 pr-11 text-sm text-gray-900
+                   placeholder-gray-400 focus:outline-none focus:border-blue-600
+                   focus:ring-2 focus:ring-blue-600/15 transition" />
+          <!-- eye toggle button -->
+          <button type="button" (click)="togglePassword()"
+            class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 transition">
+            @if (showPassword()) {
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 10.6a2 2 0 002.8 2.8M9.9 4.2A9.8 9.8 0 0112 4c5 0 9 4 9 8a9.7 9.7 0 01-1.7 3M6.1 6.1A10.6 10.6 0 003 12c0 4 4 8 9 8a9.6 9.6 0 004-0.9" stroke-linecap="round"/></svg>
+            } @else {
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke-linecap="round"/><circle cx="12" cy="12" r="3"/></svg>
+            }
+          </button>
+        </div>
       </div>
 
-      <!-- Submit -->
-      <button
-        type="submit"
-        class="w-full rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white
-               hover:bg-blue-700 active:scale-[.99] transition">
+      <!-- Orange action button -->
+      <button type="submit"
+        class="w-full rounded-lg bg-orange-500 py-2.5 text-sm font-semibold text-white
+               hover:bg-orange-600 active:scale-[.99] shadow-sm shadow-orange-500/30 transition">
         Sign in
       </button>
     </form>
 
-    <!-- Result message (only shows when there's a message) -->
     @if (message()) {
       <p class="mt-4 text-center text-sm text-gray-600">{{ message() }}</p>
     }
 
-    <!-- Footer link -->
     <p class="mt-6 text-center text-sm text-gray-500">
       New to Kaad?
-      <a href="#" class="font-medium text-blue-600 hover:underline">Create an account</a>
+      <a href="#" class="font-semibold text-orange-500 hover:underline">Create an account</a>
     </p>
-
   </div>
 </main>
