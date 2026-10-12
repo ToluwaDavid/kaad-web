@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-register',
@@ -6,4 +6,11 @@ import { Component } from '@angular/core';
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
-export class Register {}
+export class Register {
+  email = signal('');
+  password = signal('');
+
+  onSubmit() {
+    console.log('Registering with email:', this.email(), 'and password:', this.password());
+  }
+}
