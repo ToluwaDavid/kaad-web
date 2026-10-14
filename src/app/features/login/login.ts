@@ -1,36 +1,35 @@
 import { Component, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Auth } from '../../core/services/auth';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
 export class Login {
-
   private auth = inject(Auth);
-
 
   email = signal('');
   password = signal('');
   message = signal('');
-showPassword = signal(false);
+  showPassword = signal(false);
 
-togglePassword() {
-  this.showPassword.set(!this.showPassword());
-}
+  togglePassword() {
+    this.showPassword.set(!this.showPassword());
+  }
 
   onSubmit() {
-    this.auth.login(this.email(), this.password()).subscribe(
-    {  
+    this.auth.login(this.email(), this.password()).subscribe({
       next: (res) => {
-      this.message.set('Login successful!');
-    },
+        this.message.set('Login successful!');
+      },
       error: (err) => {
-        this.message.set('Login failed: ' + (err.error?.message || 'try again'))
-      }
-    }
-    )
+        this.message.set('Login failed: ' + (err.error?.message || 'try again'));
+      },
+    });
   }
 }
