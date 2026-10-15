@@ -50,5 +50,11 @@ describe('Login', () => {
     
     //expect(() => component.onSubmit()).not.toThrow();
   });
+  it('should show and error message on failed login', ()=>{
+    component.email.set('wrongEmail@mail.com');
+    component.password.set('badpassword');
+    component.onSubmit();
+    expect(component.message()).toBe('Login failed: Invalid credentials');
+  })
 
 });
