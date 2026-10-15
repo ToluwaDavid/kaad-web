@@ -84,9 +84,9 @@
     </form>
 
     @if(message()){
-      <p class="mt-4 text-sm text-red-500">{{message()}}</p>
+      <p class="mt-4 text-sm " [class.text-red-600]="message().toLowerCase().includes('failed')" [class.text-green-600]="message().toLowerCase().includes('successful')">{{message()}}</p>
     }
-    <p class="mt-6 text-center text-sm text-gra y-500">
+    <p class="mt-6 text-center text-sm text-gray-500">
         Already have an account?
         <a routerLink="/login" class="font-semibold text-orange-500 hover:underline">Sign in</a>
     </p>

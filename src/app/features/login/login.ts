@@ -4,8 +4,6 @@ import { Auth } from '../../core/services/auth';
 
 @Component({
   selector: 'app-login',
-
-  standalone: true,
   imports: [RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.scss',
@@ -17,18 +15,33 @@ export class Login {
   password = signal('');
   message = signal('');
   showPassword = signal(false);
+  isSubmitting = signal(false);
 
   togglePassword() {
     this.showPassword.set(!this.showPassword());
   }
 
   onSubmit() {
-    this.auth.login(this.email(), this.password()).subscribe({
-      next: (res) => {
+    const email = this.email().trim();
+    const password = this.password().trim();
+
+    if(!email || !password){
+      this.message.set('Login failed: Email and password are required.');
+      return;
+    }
+
+    this.isSubmitting.set(true);
+
+    this.auth.login(email, password).subscribe({
+      next: () => {
         this.message.set('Login successful!');
+        this.isSubmitting.set(false);
       },
       error: (err) => {
-        this.message.set('Login failed: ' + (err.error?.message || 'try again'));
+        const errorMessage = err?.error?.message || err?.message || 'try again';
+        this.message.set
+        (`Login failed: ${errorMessage}`);
+        this.isSubmitting.set(false);
       },
     });
   }
