@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Auth } from '../../core/services/auth';
 
 @Component({
   selector: 'app-register',
@@ -9,19 +10,29 @@ import { RouterLink } from '@angular/router';
   styleUrl: './register.scss',
 })
 export class Register {
+  private auth = inject(Auth);
+
   email = signal('');
   password = signal('');
   showPassword = signal(false);
   loading = signal(false);
   message = signal('');
 
-  togglePassword(){
+  togglePassword() {
     this.showPassword.set(!this.showPassword());
   }
 
   onSubmit() {
+    const email = this.email().trim();
+    const password = this.password().trim();
+
+    if (!email || !password) {
+      this.message.set('Registration failed: Email and password are required.');
+      return;
+    }
+
     this.loading.set(true);
 
-    console.log('Registering with email:', this.email(), 'and password:', this.password());
+    this.auth.register(email, password)
   }
 }

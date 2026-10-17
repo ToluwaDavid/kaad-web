@@ -7,6 +7,11 @@ export interface LoginResponse{
   token : string;
 }
 
+export interface RegisterResponse{
+  message : string;
+  token ?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -20,5 +25,9 @@ export class Auth {
       email, 
       password
     });
+  }
+
+  register(email: string, password: string){
+   console.log('Registering user:', email, password);
   }
 }
