@@ -27,7 +27,10 @@ export class Auth {
     });
   }
 
-  register(email: string, password: string){
-   console.log('Registering user:', email, password);
+   register(email: string, password: string){
+   return this.http.post<RegisterResponse>(`${this.apiUrl}/auth/register`, {
+      email, 
+      password
+    });
   }
 }

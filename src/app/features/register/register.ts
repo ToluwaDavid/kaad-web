@@ -33,6 +33,16 @@ export class Register {
 
     this.loading.set(true);
 
-    this.auth.register(email, password)
+    
+    this.auth.register(email, password).subscribe({
+      next: (response) => {
+        this.message.set('Registration successful! Please check your email for verification.');
+        this.loading.set(false);    
+      },
+      error: (error) => {
+        this.message.set(`Registration failed : ${error.error?.message || error.message}`);
+        this.loading.set(false);  
+      }
+    })
   }
 }
