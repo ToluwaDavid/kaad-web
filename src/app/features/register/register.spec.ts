@@ -8,13 +8,22 @@ describe('Register', () => {
   let component: Register;
   let fixture: ComponentFixture<Register>;
 
-
+  const mockAuth ={
+    register: vi.fn((email: string, password: string) => {
+      if(email === 'deyplay@gbam.com' && password === 'supersecret123'){
+        return of({ message: 'Account created! You can now sign in.' });
+      } else{
+        return throwError(() => new Error('Invalid registration details'));
+      }
+    })
+  }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Register],
       providers: [
         provideRouter([]),
+        { provide: Auth, useValue: mockAuth }
       ]
     }).compileComponents();
 
@@ -45,9 +54,13 @@ describe('Register', () => {
   });
 
   it('should call register without any error', () => {
-    component.email.set('valid@email.com');
-    component.password.set('validpassword');
+    component.email.set('deyplay@gbam.com');
+    component.password.set('supersecret123');
+
     component.onSubmit();
+
+    expect(mockAuth.register).toHaveBeenCalledWith('deyplay@gbam.com', 'supersecret123');
+    expect(component.message()).toBe('Account created! You can now sign in.');
   });
 
 });

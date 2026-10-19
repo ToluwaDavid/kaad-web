@@ -36,7 +36,7 @@ export class Register {
     
     this.auth.register(email, password).subscribe({
       next: (response) => {
-        this.message.set('Registration successful! Please check your email for verification.');
+        this.message.set('Account created! You can now sign in.');
         this.loading.set(false);    
       },
       error: (error) => {
