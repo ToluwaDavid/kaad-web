@@ -40,9 +40,9 @@ export class Register {
         this.loading.set(false);    
       },
       error: (error) => {
-        this.message.set(`Registration failed : ${error.error?.message || error.message}`);
-        this.loading.set(false);  
+        this.message.set(`Registration failed: ${error.error?.message || error.message}`);
+        this.loading.set(false);
       }
-    })
+    });
   }
 }
