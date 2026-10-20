@@ -63,4 +63,13 @@ describe('Register', () => {
     expect(component.message()).toBe('Account created! You can now sign in.');
   });
 
+
+  it('should show an error message from the server on failed registration', () => {
+    component.email.set('someemail@example.com');
+    component.password.set('badpassword');
+
+    component.onSubmit();
+    expect(component.message()).toBe('Registration failed: Invalid registration details');
+  })
+
 });
