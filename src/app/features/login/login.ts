@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Auth } from '../../core/services/auth';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   imports: [RouterLink],
@@ -10,6 +10,7 @@ import { Auth } from '../../core/services/auth';
 })
 export class Login {
   private auth = inject(Auth);
+  private router = inject(Router)
 
   email = signal('');
   password = signal('');
@@ -36,6 +37,7 @@ export class Login {
       next: () => {
         this.message.set('Login successful!');
         this.isSubmitting.set(false);
+        this.router.navigate(['/dashboard'])
       },
       error: (err) => {
         const errorMessage = err?.error?.message || err?.message || 'try again';
