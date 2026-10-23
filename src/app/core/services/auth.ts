@@ -32,7 +32,10 @@ export class Auth {
   }
 
   register(email: string, password: string){
-   console.log('Registering user:', email, password);
+    return this.http.post<RegisterResponse>(`${this.apiUrl}/auth/register`, {
+      email, password
+    })
+   //console.log('Registering user:', email, password);
   }
 
   private saveToken(token: string) {
@@ -46,6 +49,6 @@ export class Auth {
   }
 
   isLoggedIn() : boolean {
-    { return !!this.getToken() }
+     return !!this.getToken() 
   }
 }
