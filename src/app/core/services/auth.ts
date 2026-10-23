@@ -49,6 +49,6 @@ export class Auth {
   }
 
   isLoggedIn() : boolean {
-    { return !!this.getToken() }
+     return !!this.getToken() 
   }
 }
