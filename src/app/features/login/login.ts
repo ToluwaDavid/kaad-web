@@ -4,6 +4,7 @@ import { Auth } from '../../core/services/auth';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
+  standalone: true,
   imports: [RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.scss',
@@ -22,7 +23,7 @@ export class Login {
     this.showPassword.set(!this.showPassword());
   }
 
-  onSubmit() {
+  onSubmit(): void {
     const email = this.email().trim();
     const password = this.password().trim();
 

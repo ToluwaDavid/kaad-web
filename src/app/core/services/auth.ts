@@ -17,9 +17,9 @@ export interface RegisterResponse{
   providedIn: 'root',
 })
 export class Auth {
-  private http = inject(HttpClient);
-  private tokenKey = 'kaadi-token';
-  private apiUrl = 'http://localhost:5012/api';
+  private readonly http = inject(HttpClient);
+  private readonly tokenKey = 'kaadi-token';
+  private readonly apiUrl = 'http://localhost:5012/api';
 
   login(email: string, password: string){
     return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, {
@@ -35,7 +35,13 @@ export class Auth {
    return this.http.post<RegisterResponse>(`${this.apiUrl}/auth/register`, {
       email, 
       password
-    });
+    }).pipe(
+      tap((res)=>{
+        if(res.token){
+          this.saveToken(res.token)
+        }
+      })
+    );
   }
 
   private saveToken(token: string) {
@@ -44,7 +50,7 @@ export class Auth {
   getToken() : string | null {
     return localStorage.getItem(this.tokenKey);
   }
-  logout(){
+  logout(): void{
     localStorage.removeItem(this.tokenKey);
   }
 
