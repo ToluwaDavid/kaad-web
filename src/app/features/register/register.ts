@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { Auth } from '../../core/services/auth';
 
 @Component({
@@ -10,7 +10,8 @@ import { Auth } from '../../core/services/auth';
   styleUrl: './register.scss',
 })
 export class Register {
-  private auth = inject(Auth);
+  private readonly auth = inject(Auth);
+  private readonly router = inject(Router)
 
   email = signal('');
   password = signal('');
@@ -35,12 +36,14 @@ export class Register {
 
     
     this.auth.register(email, password).subscribe({
-      next: (response) => {
+      next: () => {
         this.message.set('Account created! You can now sign in.');
-        this.loading.set(false);    
+        this.loading.set(false);
+        this.router.navigate(['/dashboard']);    
       },
       error: (error) => {
-        this.message.set(`Registration failed: ${error.error?.message || error.message}`);
+        const errorMessage = error?.error?.message || error?.message || 'Please try again.';
+        this.message.set(`Registration failed: ${errorMessage}`);
         this.loading.set(false);
       }
     });
