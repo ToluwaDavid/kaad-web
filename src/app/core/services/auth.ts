@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {tap} from 'rxjs/operators'; 
+import { environment } from '../../../environments/environment';
 
 
 export interface LoginResponse{
@@ -19,7 +20,7 @@ export interface RegisterResponse{
 export class Auth {
   private readonly http = inject(HttpClient);
   private readonly tokenKey = 'kaadi-token';
-  private readonly apiUrl = 'http://localhost:5012/api';
+  private readonly apiUrl = environment.apiUrl;
 
   login(email: string, password: string){
     return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, {
