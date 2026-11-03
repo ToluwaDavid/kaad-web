@@ -24,4 +24,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/kaad-web/browser/
-          server-dir: ./
+          server-dir: /site1/
